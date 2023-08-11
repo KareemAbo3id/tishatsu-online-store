@@ -15,8 +15,6 @@ const errorNotFound = (req, res, next) => {
 const errorHandler = (err, req, res, next) => {
   // if the statusCode is ok (200) make it Server-error (500)
   let responseStatusCode = res.statusCode === 200 ? 500 : res.statusCode;
-
-  // set the error message:
   let errorMessage = err.message;
 
   // error from mongoos about not found resource:
@@ -28,8 +26,7 @@ const errorHandler = (err, req, res, next) => {
   // get the error on json form:
   res.status(responseStatusCode).json({
     status: responseStatusCode,
-    errorMessage: '⛔ The Fucking Route Not Found!!',
-    // eslint-disable-next-line no-undef
+    message: errorMessage,
     stack: process.env.NODE_ENV === 'production' ? null : err.stack,
   });
 };

@@ -6,49 +6,38 @@
 
 // 👉 INITIAL IMPORTS:
 import express from 'express';
-import {
-  userAuth,
-  userGetProfile,
-  userLogout,
-  userSignUp,
-  userUpdateProfile,
-} from '../controllers/user.controller.js';
-
-// ⚙️ USER ROUTES:
-const u_route = {
-  base: '/',
-  auth: '/auth',
-  profile: '/profile',
-  logout: '/logout',
-};
+import { userAuth } from '../controllers/user/auth.ctrl';
+import { userSignup } from '../controllers/user/signup.ctrl';
+import { getProfile, putProfile } from '../controllers/user/profile.ctrl';
+import { userLogout } from '../controllers/user/logout.ctrl';
 
 // ⚙️ INITIATE EXPRESS ROUTER:
 const router = express.Router();
 
 // 👇 USER NEW SIGN UP CONTROLLER:
-// @desc - POST | /api/users | sign up a new user
+// @desc - POST | /API/USERS
 // @access - public
-router.post(u_route.base, userSignUp);
+router.post('/', userSignup);
 
 // 👇 USER AUTHENTICATION & TOKEN ROUTER:
-// @desc - POST | /api/users/auth | authenticate a user and get token
+// @desc - POST | /API/USERS/AUTH
 // @access - public
-router.post(u_route.auth, userAuth);
+router.post('/auth', userAuth);
 
 // 👇 USER GET PROFILE CONTROLLER:
-// @desc - GET | /api/users/profile | get user profile
+// @desc - GET | /API/USERS/PROFILE
 // @access - Private
-router.get(u_route.profile, userGetProfile);
+router.get('/profile', getProfile);
 
 // 👇 USER UPDATE PROFILE CONTROLLER:
-// @desc - PUT | /api/users/profile | update user profile
+// @desc - PUT | /API/USERS/PROFILE
 // @access - Private
-router.put(u_route.profile, userUpdateProfile);
+router.put('/profile', putProfile);
 
 // 👇 USER LOGOUT CONTROLLER:
-// @desc - POST | /api/users/logout | user logout
+// @desc - POST | /API/USERS/LOGOUT
 // @access - public
-router.post(u_route.logout, userLogout);
+router.post('/logout', userLogout);
 
 //__________________________________
 export default router;
