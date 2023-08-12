@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 // 👉 DATABASE CONNECTION:
 // Asynchronous Function To Connect To Database by mongoose:
-const databaseInitialization = async () => {
+export const connectDatabase = async () => {
   try {
     //// ⚙️ INITIATE DATABASE CONNECTION OBJECT /////////////////////////////
     const dataBaseConnection = await mongoose.connect(process.env.MONGO_URI);
@@ -18,5 +18,3 @@ const databaseInitialization = async () => {
     process.exit(1);
   }
 };
-
-export default databaseInitialization;

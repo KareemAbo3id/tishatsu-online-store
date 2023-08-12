@@ -9,19 +9,21 @@
 // 👉 INITIAL IMPORTS:
 import express from 'express';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 import userRoutes from './routes/user.routes.js';
 import { errorNotFound, errorHandler } from './middlewares/errors.mw.js';
-import databaseInitialization from './configs/db.config.js';
+import { connectDatabase } from './configurations/db.config.js';
 
 // ⚙️ INITIATE THE SERVER AND CONNECT TO DATABASE:
 dotenv.config();
 const SERVER_PORT = process.env.PORT || 5000;
-databaseInitialization();
+connectDatabase();
 
 // ⚙️ INITIATE EXPRESS APP:
 const APP = express();
 APP.use(express.json());
 APP.use(express.urlencoded({ extended: true }));
+APP.use(cookieParser());
 
 // 👇 ALL APP LOGIC ////////////////////////////////////////
 

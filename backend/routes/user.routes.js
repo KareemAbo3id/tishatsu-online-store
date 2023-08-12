@@ -6,10 +6,11 @@
 
 // 👉 INITIAL IMPORTS:
 import express from 'express';
-import { userAuth } from '../controllers/user/auth.ctrl';
-import { userSignup } from '../controllers/user/signup.ctrl';
-import { getProfile, putProfile } from '../controllers/user/profile.ctrl';
-import { userLogout } from '../controllers/user/logout.ctrl';
+import { userLogin } from '../controllers/user/auth.ctrl.js';
+import { userSignup } from '../controllers/user/signup.ctrl.js';
+import { getProfile, putProfile } from '../controllers/user/profile.ctrl.js';
+import { userLogout } from '../controllers/user/logout.ctrl.js';
+import { protectRoute } from '../middlewares/auth.mw.js';
 
 // ⚙️ INITIATE EXPRESS ROUTER:
 const router = express.Router();
@@ -22,17 +23,17 @@ router.post('/', userSignup);
 // 👇 USER AUTHENTICATION & TOKEN ROUTER:
 // @desc - POST | /API/USERS/AUTH
 // @access - public
-router.post('/auth', userAuth);
+router.post('/auth', userLogin);
 
 // 👇 USER GET PROFILE CONTROLLER:
 // @desc - GET | /API/USERS/PROFILE
 // @access - Private
-router.get('/profile', getProfile);
+router.get('/profile', protectRoute, getProfile);
 
 // 👇 USER UPDATE PROFILE CONTROLLER:
 // @desc - PUT | /API/USERS/PROFILE
 // @access - Private
-router.put('/profile', putProfile);
+router.put('/profile', protectRoute, putProfile);
 
 // 👇 USER LOGOUT CONTROLLER:
 // @desc - POST | /API/USERS/LOGOUT

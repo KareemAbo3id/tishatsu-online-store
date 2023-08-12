@@ -11,12 +11,12 @@ const generateToken = (res, userID) => {
     expiresIn: '1h',
   });
 
-  res.cookie('userauthtoken', token, {
+  res.cookie('jwt', token, {
     httpOnly: true,
     // eslint-disable-next-line no-undef
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
-    maxAge: 1 * 60 * 60 * 1000,
+    maxAge: 60 * 60 * 1000,
   });
 };
 

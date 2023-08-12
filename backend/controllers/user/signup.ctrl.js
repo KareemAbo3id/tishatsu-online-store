@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler';
-import UserModel from '../../models/users.model';
-import generateToken from '../../utilities/generate-token.utility';
+import UserModel from '../../models/users.model.js';
+import generateToken from '../../utilities/token.util.js';
 
 // 👇 USER NEW SIGN UP WITH JWT CONTROLLER:
 // @desc - POST | /API/USERS
@@ -17,15 +17,15 @@ export const userSignup = asyncHandler(async (req, res) => {
   }
 
   // create new user:
-  const newUser = await UserModel.create({ name, email, password });
+  const user = await UserModel.create({ name, email, password });
 
   // if: user created successfully:
-  if (newUser) {
-    generateToken(res, newUser._id);
+  if (user) {
+    generateToken(res, user._id);
     res.status(201).json({
-      _id: newUser._id,
-      name: newUser.name,
-      email: newUser.email,
+      _id: user._id,
+      name: user.name,
+      email: user.email,
     });
   }
 
