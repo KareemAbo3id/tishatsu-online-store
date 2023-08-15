@@ -7,7 +7,7 @@ import generateToken from '../../utilities/token.util.js';
 // @access - public
 export const userSignup = asyncHandler(async (req, res) => {
   // user model keys:
-  const { name, email, password } = req.body;
+  const { name, email, password, gender } = req.body;
 
   // check if user exists:
   const isUserExists = await UserModel.findOne({ email });
@@ -17,7 +17,7 @@ export const userSignup = asyncHandler(async (req, res) => {
   }
 
   // create new user:
-  const user = await UserModel.create({ name, email, password });
+  const user = await UserModel.create({ name, email, password, gender });
 
   // if: user created successfully:
   if (user) {
@@ -26,6 +26,7 @@ export const userSignup = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      gender: user.gender,
     });
   }
 

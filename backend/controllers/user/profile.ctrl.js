@@ -9,6 +9,7 @@ export const getProfile = asyncHandler(async (req, res) => {
     _id: req.user._id,
     name: req.user.name,
     email: req.user.email,
+    gender: req.user.gender,
   };
 
   res.status(200).json(user);
@@ -24,6 +25,7 @@ export const putProfile = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
+    user.gender = req.body.gender || user.gender;
 
     // if user changes password:
     if (req.body.password) user.password = req.body.password;
@@ -35,6 +37,7 @@ export const putProfile = asyncHandler(async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
+      gender: updatedUser.gender,
     });
   }
   // else if user does not exist:
