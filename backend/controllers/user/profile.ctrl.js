@@ -8,6 +8,7 @@ export const getProfile = asyncHandler(async (req, res) => {
   const user = {
     _id: req.user._id,
     name: req.user.name,
+    username: req.user.username,
     email: req.user.email,
     gender: req.user.gender,
   };
@@ -22,6 +23,7 @@ export const putProfile = asyncHandler(async (req, res) => {
   const user = await UserModel.findById(req.user._id);
 
   // check if user exists
+  // no update for the username
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;

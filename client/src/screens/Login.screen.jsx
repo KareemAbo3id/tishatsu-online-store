@@ -7,16 +7,17 @@ import { setUserInfo } from '../context/slices/auth.slice';
 import FormContainer from '../containers/Form.container';
 import { Button, FloatingLabel, Form, Image } from 'react-bootstrap';
 import { BsBoxArrowInRight, BsFillPersonPlusFill } from 'react-icons/bs';
+import { toast } from 'react-toastify';
 import loginimage from '../assets/loginimage.png';
 
 export const LoginScreen = () => {
-  const [email, setEmail] = React.useState('');
+  const [emailOrUsername, setEmailOrUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [loginProcces] = useLoginMutation();
+  const [loginProcces, { isLoading }] = useLoginMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -30,7 +31,7 @@ export const LoginScreen = () => {
 
     try {
       // 1 get the response from the mutution with email and password passed in:
-      const res = await loginProcces({ email, password }).unwrap();
+      const res = await loginProcces({ emailOrUsername, password }).unwrap();
 
       // 2 dispatch the action with response from mutution to update user info:
       dispatch(setUserInfo({ ...res }));
@@ -38,13 +39,9 @@ export const LoginScreen = () => {
       // 3 direct to home page:
       navigate('/');
 
-      // 4 clear the inputs:
-      setEmail('');
-      setPassword('');
-
       // error:
     } catch (err) {
-      console.log(err?.data?.message || err?.error);
+      toast.error(err?.data?.message || err?.error, { theme: 'colored' });
     }
   };
 
@@ -66,29 +63,23 @@ export const LoginScreen = () => {
           <h1 className="fs-5 py-3 text-center">Log In</h1>
           {/* Email */}
           <FloatingLabel
-            label="Email address *"
+            label="Email address or username"
             className="mb-2"
-            controlId="email"
+            controlId="text"
           >
             <Form.Control
-              type="email"
+              type="text"
               required
-              placeholder="example@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={emailOrUsername}
+              onChange={(e) => setEmailOrUsername(e.target.value)}
             />
           </FloatingLabel>
 
           {/* Password */}
-          <FloatingLabel
-            label="Password *"
-            className="mb-2"
-            controlId="password"
-          >
+          <FloatingLabel label="Password" className="mb-2" controlId="password">
             <Form.Control
               type="password"
               required
-              placeholder="xxxxxxxx"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />

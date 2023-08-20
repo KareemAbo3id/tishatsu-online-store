@@ -4,6 +4,10 @@ import bcrypt from 'bcryptjs';
 // 👉 MAIN MONGOOSE USER SCHEMA (INITIAL KEYS):
 const userSchema = mongoose.Schema(
   {
+    username: {
+      type: String,
+      required: true,
+    },
     name: {
       type: String,
       required: true,

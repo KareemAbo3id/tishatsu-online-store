@@ -6,10 +6,15 @@ import generateToken from '../../utilities/token.util.js';
 // @desc - POST | /API/USERS/AUTH
 // @access - public
 export const userLogin = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+  const { password } = req.body;
 
   // find user by email:
-  const user = await UserModel.findOne({ email });
+  const user = await UserModel.findOne({
+    $or: [
+      { email: req.body.emailOrUsername },
+      { username: req.body.emailOrUsername },
+    ],
+  });
 
   // if user not found:
   if (!user) {
@@ -17,15 +22,14 @@ export const userLogin = asyncHandler(async (req, res) => {
     throw new Error('no such user exists, please check your email');
   }
 
-  // console.log(existedUser);
-
-  // if: existedUser password is correct:
   if (user && (await user.matchPassword(password))) {
     generateToken(res, user._id);
     res.status(201).json({
       _id: user._id,
+      username: user.username,
       name: user.name,
       email: user.email,
+      gender: user.gender,
     });
   }
 

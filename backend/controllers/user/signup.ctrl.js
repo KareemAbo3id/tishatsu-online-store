@@ -7,17 +7,29 @@ import generateToken from '../../utilities/token.util.js';
 // @access - public
 export const userSignup = asyncHandler(async (req, res) => {
   // user model keys:
-  const { name, email, password, gender } = req.body;
+  const { name, username, email, password, gender } = req.body;
 
   // check if user exists:
-  const isUserExists = await UserModel.findOne({ email });
+  const isUserExists = await UserModel.findOne({
+    $or: [
+      { email: req.body.emailOrUsername },
+      { username: req.body.emailOrUsername },
+    ],
+  });
+
   if (isUserExists) {
     res.status(400);
     throw new Error('User already exists');
   }
 
   // create new user:
-  const user = await UserModel.create({ name, email, password, gender });
+  const user = await UserModel.create({
+    name,
+    username,
+    email,
+    password,
+    gender,
+  });
 
   // if: user created successfully:
   if (user) {
@@ -25,6 +37,7 @@ export const userSignup = asyncHandler(async (req, res) => {
     res.status(201).json({
       _id: user._id,
       name: user.name,
+      username: user.username,
       email: user.email,
       gender: user.gender,
     });
