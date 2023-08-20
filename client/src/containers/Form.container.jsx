@@ -4,11 +4,11 @@ import { Container, Row, Col } from 'react-bootstrap';
 const FormContainer = ({ leftContent, rightContent }) => {
   return (
     <Container>
-      <Row className="justify-content-md-center mt-2">
-        <Col xs={12} md={6} className="p-3 d-flex justify-content-center">
+      <Row className="justify-content-md-center mt-3">
+        <Col xs={12} lg={6} className="d-flex justify-content-center">
           {leftContent}
         </Col>
-        <Col xs={12} md={6} className="p-3 d-flex justify-content-center">
+        <Col xs={12} lg={6} className="d-flex justify-content-center">
           {rightContent}
         </Col>
       </Row>

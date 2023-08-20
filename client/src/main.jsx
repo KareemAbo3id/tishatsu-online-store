@@ -6,28 +6,36 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom';
-import store from './store.js';
+import store from './context/store.js';
 import { Provider } from 'react-redux';
-import App from './App.jsx';
-import Home from './screens/Home.screen.jsx';
+import { App } from './App.jsx';
+import { HomeScreen } from './screens/Home.screen.jsx';
+import { LoginScreen } from './screens/Login.screen.jsx';
+import { SignupScreen } from './screens/Signup.screen.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Login from './screens/Login.screen.jsx';
-import Signup from './screens/Signup.screen.jsx';
 
-const router = createBrowserRouter(
+// app html root:
+const APP_ROOT = document.getElementById('root');
+
+// app router:
+const APP_ROUTER = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
-      <Route index={true} path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
+      <Route index={true} path="/" element={<HomeScreen />} />
+      <Route path="/login" element={<LoginScreen />} />
+      <Route path="/signup" element={<SignupScreen />} />
     </Route>
   )
 );
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+// app dom tree:
+const APP_DOM = (
   <Provider store={store}>
     <React.StrictMode>
-      <RouterProvider router={router} />
+      <RouterProvider router={APP_ROUTER} />
     </React.StrictMode>
   </Provider>
 );
+
+// app render:
+ReactDOM.createRoot(APP_ROOT).render(APP_DOM);

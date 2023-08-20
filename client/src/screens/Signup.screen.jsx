@@ -3,9 +3,9 @@ import FormContainer from '../containers/Form.container';
 import { Button, FloatingLabel, Form, Image } from 'react-bootstrap';
 import { BsBoxArrowInRight, BsFillPersonPlusFill } from 'react-icons/bs';
 import { LinkContainer } from 'react-router-bootstrap';
-import signupimage from '../assets/signupimage.jpg';
+import signupimage from '../assets/signupimage.png';
 
-const Signup = () => {
+export const SignupScreen = () => {
   const [email, setEmail] = React.useState('');
   const [name, setName] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -20,18 +20,17 @@ const Signup = () => {
   return (
     <FormContainer
       leftContent={
-        <div className="d-flex flex-column align-items-center">
+        <div className="d-flex mb-md-5 flex-column align-items-center justify-content-center">
+          <p className="fs-2 fw-light d-lg-none">Hello there!</p>
           <Image src={signupimage} style={{ width: '70%' }} />
-          <p className="display-5">Hello there!</p>
-          <p className="fs-6">
-            This is a boilerplate for MERN authentication app by Kareem Aboeid
-          </p>
+          <p className="fs-2 fw-light d-none d-lg-block">Hello there!</p>
         </div>
       }
       rightContent={
         <Form
           onSubmit={signupHandler}
-          className="px-4 border-secondary-subtle rounded-3 d-flex flex-column justify-content-center align-items-stretch w-75 h-100"
+          className="px-4 mb-md-5 pb-3 d-flex flex-column justify-content-start align-items-stretch h-100"
+          style={{ minWidth: '400px' }}
         >
           <h1 className="fs-5 py-3 text-center">Create your account</h1>
           {/* Name */}
@@ -139,5 +138,3 @@ const Signup = () => {
     ></FormContainer>
   );
 };
-
-export default Signup;

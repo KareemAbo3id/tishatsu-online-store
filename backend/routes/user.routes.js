@@ -16,27 +16,27 @@ import { protectRoute } from '../middlewares/auth.mw.js';
 const router = express.Router();
 
 // 👇 USER NEW SIGN UP CONTROLLER:
-// @desc - POST | /API/USERS
+// @desc - POST | /api/users
 // @access - public
 router.post('/', userSignup);
 
 // 👇 USER AUTHENTICATION & TOKEN ROUTER:
-// @desc - POST | /API/USERS/AUTH
+// @desc - POST | /api/users/auth
 // @access - public
 router.post('/auth', userLogin);
 
 // 👇 USER GET PROFILE CONTROLLER:
-// @desc - GET | /API/USERS/PROFILE
+// @desc - GET | /api/users/profile
 // @access - Private
 router.get('/profile', protectRoute, getProfile);
 
 // 👇 USER UPDATE PROFILE CONTROLLER:
-// @desc - PUT | /API/USERS/PROFILE
+// @desc - PUT | /api/users/profile
 // @access - Private
 router.put('/profile', protectRoute, putProfile);
 
 // 👇 USER LOGOUT CONTROLLER:
-// @desc - POST | /API/USERS/LOGOUT
+// @desc - POST | /api/users/logout
 // @access - public
 router.post('/logout', userLogout);
 

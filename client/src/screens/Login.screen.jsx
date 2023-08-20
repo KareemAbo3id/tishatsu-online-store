@@ -1,31 +1,67 @@
 import React from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLoginMutation } from '../context/slices/usersApi.slice';
+import { setUserInfo } from '../context/slices/auth.slice';
 import FormContainer from '../containers/Form.container';
 import { Button, FloatingLabel, Form, Image } from 'react-bootstrap';
 import { BsBoxArrowInRight, BsFillPersonPlusFill } from 'react-icons/bs';
-import { LinkContainer } from 'react-router-bootstrap';
-import signupimage from '../assets/signupimage.jpg';
+import loginimage from '../assets/loginimage.png';
 
-const Login = () => {
+export const LoginScreen = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [loginProcces] = useLoginMutation();
+
+  const { userInfo } = useSelector((state) => state.auth);
+
+  React.useEffect(() => {
+    // if user is logged in, direct to home page:
+    if (userInfo) navigate('/');
+  }, [navigate, userInfo]);
+
   const loginHandler = async (e) => {
     e.preventDefault();
-    console.log('logged in');
+
+    try {
+      // 1 get the response from the mutution with email and password passed in:
+      const res = await loginProcces({ email, password }).unwrap();
+
+      // 2 dispatch the action with response from mutution to update user info:
+      dispatch(setUserInfo({ ...res }));
+
+      // 3 direct to home page:
+      navigate('/');
+
+      // 4 clear the inputs:
+      setEmail('');
+      setPassword('');
+
+      // error:
+    } catch (err) {
+      console.log(err?.data?.message || err?.error);
+    }
   };
 
   return (
     <FormContainer
       leftContent={
-        <div className="d-flex flex-column align-items-center">
-          <Image src={signupimage} style={{ width: '70%' }} />
-          <p className="display-5">Welcome back, Log In!</p>
+        <div className="d-flex mb-md-5 flex-column align-items-center justify-content-center">
+          <p className="fs-2 fw-light d-lg-none">Welcome back!</p>
+          <Image src={loginimage} style={{ width: '70%' }} />
+          <p className="fs-2 fw-light d-none d-lg-block">Welcome back!</p>
         </div>
       }
       rightContent={
         <Form
           onSubmit={loginHandler}
-          className="px-4 border-secondary-subtle rounded-3 d-flex flex-column justify-content-center align-items-stretch w-75 h-100"
+          className="px-4 mb-md-5 pb-3 d-flex flex-column justify-content-start align-items-stretch h-100"
+          style={{ minWidth: '400px' }}
         >
           <h1 className="fs-5 py-3 text-center">Log In</h1>
           {/* Email */}
@@ -57,7 +93,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </FloatingLabel>
-          {/* Login button */}
+          {/* LoginScreen button */}
           <div className="d-flex my-2">
             <Button
               type="submit"
@@ -87,5 +123,3 @@ const Login = () => {
     ></FormContainer>
   );
 };
-
-export default Login;
