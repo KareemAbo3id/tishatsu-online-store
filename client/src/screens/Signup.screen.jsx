@@ -1,11 +1,14 @@
 import React from 'react';
 import FormContainer from '../containers/Form.container';
+import PropTypes from 'prop-types';
 import { Button, FloatingLabel, Form, Image } from 'react-bootstrap';
 import { BsBoxArrowInRight, BsFillPersonPlusFill } from 'react-icons/bs';
 import { LinkContainer } from 'react-router-bootstrap';
 import signupimage from '../assets/signupimage.png';
+import { useDocTitle } from '../hooks/docTitle.hook';
 
-export const SignupScreen = () => {
+export const SignupScreen = ({ documentTitle }) => {
+  const [docTitle, setDocTitle] = useDocTitle(documentTitle);
   const [email, setEmail] = React.useState('');
   const [name, setName] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -137,4 +140,8 @@ export const SignupScreen = () => {
       }
     ></FormContainer>
   );
+};
+
+SignupScreen.propTypes = {
+  documentTitle: PropTypes.string.isRequired,
 };

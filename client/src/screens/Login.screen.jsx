@@ -1,5 +1,6 @@
 import React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
+import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLoginMutation } from '../context/slices/usersApi.slice';
@@ -9,8 +10,10 @@ import { Button, FloatingLabel, Form, Image } from 'react-bootstrap';
 import { BsBoxArrowInRight, BsFillPersonPlusFill } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import loginimage from '../assets/loginimage.png';
+import { useDocTitle } from '../hooks/docTitle.hook';
 
-export const LoginScreen = () => {
+export const LoginScreen = ({ documentTitle }) => {
+  const [docTitle, setDocTitle] = useDocTitle(documentTitle);
   const [emailOrUsername, setEmailOrUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -113,4 +116,8 @@ export const LoginScreen = () => {
       }
     ></FormContainer>
   );
+};
+
+LoginScreen.propTypes = {
+  documentTitle: PropTypes.string.isRequired,
 };
