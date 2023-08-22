@@ -1,12 +1,12 @@
 {
-  "name": "mern-auth-app",
+  "name": "tishatsu-online-store",
   "version": "1.0.0",
   "description": "",
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "node backend/server.js",
-    "server": "nodemon backend/server.js",
+    "start": "node server/indexjs",
+    "server": "nodemon server/index.js",
     "client": "npm run dev --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
